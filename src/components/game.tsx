@@ -3,15 +3,9 @@
 import { Computer } from "@/components/computer";
 import { NUMBER_OF_COMPUTERS } from "@/config";
 import { Pause, Play, TimerReset } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useCountdown, useUpdateEffect } from "usehooks-ts";
-
-export type ComputerData = {
-  id: number;
-  infected: boolean;
-  destroyed: boolean;
-};
 
 const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -38,7 +32,6 @@ export const Game = () => {
   };
 
   const handleComputerClick = (index: number) => {
-    toast("You clicked computer " + index + "   " + infectedIndex);
     if (infectedIndex < index) {
       toast("It's lower");
     } else if (infectedIndex > index) {
@@ -82,6 +75,7 @@ export const Game = () => {
         </span>
         <span>{count}</span>
       </div>
+      {infectedIndex}
       <div className="grid grid-cols-12 gap-6 p-8">
         {[...Array(NUMBER_OF_COMPUTERS)].map((_, i) => (
           <Computer

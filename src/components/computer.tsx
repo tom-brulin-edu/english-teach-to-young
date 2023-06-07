@@ -2,9 +2,8 @@
 
 import { Dead } from "@/components/icons/dead";
 import { useState } from "react";
-import { ComputerData } from "@/components/game";
 import { cn } from "@/core/utils/cn";
-import { Cherry } from "lucide-react";
+import { Check, Cherry } from "lucide-react";
 
 type Props = {
   id: number;
@@ -36,7 +35,7 @@ export const Computer = ({ id, infected, destroyed, onClick }: Props) => {
           </div>
         ) : hasBeenClicked ? (
           <div className="flex items-center justify-center w-full h-full bg-red-600">
-            <Dead />
+            {infected ? <Check className="text-green-500" /> : <Dead />}
           </div>
         ) : (
           <div
