@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <body
         className={cn("p-8 relative h-screen w-full bg-black", inter.className)}
       >
