@@ -1,7 +1,6 @@
 "use client";
 
 import { Dead } from "@/components/icons/dead";
-import { useState } from "react";
 import { cn } from "@/core/utils/cn";
 import { Check, Cherry } from "lucide-react";
 
@@ -9,19 +8,23 @@ type Props = {
   id: number;
   infected: boolean;
   destroyed: boolean;
+  hasBeenClicked: boolean;
   onClick: () => void;
 };
 
-export const Computer = ({ id, infected, destroyed, onClick }: Props) => {
-  const [hasBeenClicked, setHasBeenClicked] = useState(false);
-
+export const Computer = ({
+  id,
+  infected,
+  destroyed,
+  hasBeenClicked,
+  onClick,
+}: Props) => {
   return (
     <div
       className="relative w-[75px] h-[75px] cursor-pointer"
       onClick={() => {
         if (hasBeenClicked || destroyed) return;
         onClick();
-        setHasBeenClicked(true);
       }}
     >
       <div className="absolute rounded-lg w-full h-[50px] bg-white border-4 border-neutral-500 overflow-hidden">

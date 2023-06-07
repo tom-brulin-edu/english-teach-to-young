@@ -11,6 +11,7 @@ const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const Game = () => {
+  const [clickedComputers, setClickedComputers] = useState<number[]>([]);
   const [infectedIndex, setInfectedIndex] = useState(
     randomInt(0, NUMBER_OF_COMPUTERS - 1)
   );
@@ -32,6 +33,10 @@ export const Game = () => {
   };
 
   const handleComputerClick = (index: number) => {
+    if (clickedComputers.includes(index)) return;
+
+    setClickedComputers((prev) => [...prev, index]);
+
     if (infectedIndex < index) {
       toast("It's lower");
     } else if (infectedIndex > index) {
@@ -48,6 +53,7 @@ export const Game = () => {
     resetCountdown();
 
     setInfectedIndex(randomInt(0, NUMBER_OF_COMPUTERS - 1));
+    setClickedComputers([]);
   };
 
   useUpdateEffect(() => {
@@ -83,6 +89,7 @@ export const Game = () => {
             id={i}
             infected={i === infectedIndex}
             destroyed={false}
+            hasBeenClicked={clickedComputers.includes(i)}
             onClick={() => handleComputerClick(i)}
           />
         ))}
