@@ -21,7 +21,6 @@ export default function RootLayout({
         className={cn("p-8 relative h-screen w-full bg-black", inter.className)}
       >
         <Providers>
-          <div className="absolute h-full w-full top-0 left-0 bg-black opacity-70"></div>
           <main>{children}</main>
         </Providers>
       </body>
