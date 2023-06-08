@@ -91,6 +91,8 @@ export const Game = () => {
   const handleAlgo2 = () => {
     console.log("start algo 2");
     let current = (NUMBER_OF_COMPUTERS - 1) / 2;
+    let min = 0;
+    let max = NUMBER_OF_COMPUTERS - 1;
 
     const interval = setInterval(() => {
       if (current === NUMBER_OF_COMPUTERS - 1) {
@@ -111,7 +113,16 @@ export const Game = () => {
         router.push("/win");
         return;
       }
-    }, 500);
+
+      if (infectedIndex < current) {
+        max = current;
+        current = Math.round(Math.floor((current - min) / 2));
+      } else {
+        min = current;
+        current = Math.round(Math.floor((max - current) / 2) + current);
+      }
+      console.log(current);
+    }, 1000);
   };
 
   useUpdateEffect(() => {
