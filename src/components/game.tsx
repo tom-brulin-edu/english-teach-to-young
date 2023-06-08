@@ -111,7 +111,7 @@ export const Game = () => {
           type: "success",
         });
         clearInterval(interval);
-        // router.push("/win");
+        router.push("/win");
         return;
       }
 
