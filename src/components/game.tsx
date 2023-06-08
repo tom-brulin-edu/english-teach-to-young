@@ -14,7 +14,6 @@ const randomInt = (min: number, max: number) =>
 export const Game = () => {
   const router = useRouter();
   const [clickedComputers, setClickedComputers] = useState<number[]>([]);
-  const [currentBrowsingIndex, setCurrentBrowsingIndex] = useState<number>(-1);
   const [biggerComputers, setBiggerComputers] = useState<number[]>([]);
   const [lowerComputers, setLowerComputers] = useState<number[]>([]);
   const [infectedIndex, setInfectedIndex] = useState(
@@ -74,7 +73,6 @@ export const Game = () => {
         return;
       }
 
-      setCurrentBrowsingIndex(current);
       setClickedComputers((prev) => [...prev, current]);
 
       if (infectedIndex === current) {
@@ -94,18 +92,19 @@ export const Game = () => {
 
   const handleAlgo2 = () => {
     console.log("start algo 2");
-    let current = (NUMBER_OF_COMPUTERS - 1) / 2;
-    let min = 0;
-    let max = NUMBER_OF_COMPUTERS - 1;
+    let current = Math.round((NUMBER_OF_COMPUTERS - 1) / 2);
+    let min = infectedIndex > current ? current : 0;
+    let max = infectedIndex < current ? current : NUMBER_OF_COMPUTERS - 1;
     setClickedComputers((prev) => [...prev, current]);
 
     const interval = setInterval(() => {
+      console.log("min", min, "max", max, "current", current);
+
       if (current === NUMBER_OF_COMPUTERS - 1) {
         clearInterval(interval);
         return;
       }
 
-      setCurrentBrowsingIndex(current);
       setClickedComputers((prev) => [...prev, current]);
 
       if (infectedIndex === current) {
@@ -122,13 +121,12 @@ export const Game = () => {
       if (infectedIndex < current) {
         setLowerComputers((prev) => [...prev, current]);
         max = current;
-        current = Math.round(Math.floor((current - min) / 2));
-      } else {
+        current = Math.floor((min + max) / 2);
+      } else if (infectedIndex > current) {
         setBiggerComputers((prev) => [...prev, current]);
         min = current;
-        current = Math.round(Math.floor((max - current) / 2) + current);
+        current = Math.floor((min + max) / 2);
       }
-      console.log(current);
     }, 1000);
   };
 
@@ -184,7 +182,6 @@ export const Game = () => {
             infected={i === infectedIndex}
             destroyed={false}
             hasBeenClicked={clickedComputers.includes(i)}
-            browsing={currentBrowsingIndex === i}
             bigger={biggerComputers.includes(i)}
             lower={lowerComputers.includes(i)}
             onClick={() => handleComputerClick(i)}

@@ -11,7 +11,6 @@ type Props = {
   hasBeenClicked: boolean;
   bigger: boolean;
   lower: boolean;
-  browsing: boolean;
   onClick: () => void;
 };
 
@@ -20,7 +19,6 @@ export const Computer = ({
   infected,
   destroyed,
   hasBeenClicked,
-  browsing,
   lower,
   bigger,
   onClick,
@@ -59,7 +57,7 @@ export const Computer = ({
             className={cn(
               "w-full h-full bg-red-600 flex items-center justify-center text-white",
               {
-                "animate-pulse bg-green-500": browsing,
+                "animate-pulse bg-green-500": infected,
               }
             )}
           >
