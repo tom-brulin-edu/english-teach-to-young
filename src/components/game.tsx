@@ -99,12 +99,6 @@ export const Game = () => {
     let max = infectedIndex < current ? current : NUMBER_OF_COMPUTERS - 1;
     setClickedComputers((prev) => [...prev, current]);
 
-    if (infectedIndex > current) {
-      setBiggerComputers((prev) => [...prev, current]);
-    } else if (infectedIndex < current) {
-      setLowerComputers((prev) => [...prev, current]);
-    }
-
     const interval = setInterval(() => {
       console.log("min", min, "max", max, "current", current);
 
@@ -122,11 +116,9 @@ export const Game = () => {
       }
 
       if (infectedIndex < current) {
-        setLowerComputers((prev) => [...prev, current]);
         max = current;
         current = Math.floor((min + max) / 2);
       } else if (infectedIndex > current) {
-        setBiggerComputers((prev) => [...prev, current]);
         min = current;
         current = Math.floor((min + max) / 2);
       }
