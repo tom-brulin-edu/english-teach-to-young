@@ -9,6 +9,7 @@ type Props = {
   infected: boolean;
   destroyed: boolean;
   hasBeenClicked: boolean;
+  browsing: boolean;
   onClick: () => void;
 };
 
@@ -17,6 +18,7 @@ export const Computer = ({
   infected,
   destroyed,
   hasBeenClicked,
+  browsing,
   onClick,
 }: Props) => {
   return (
@@ -37,7 +39,7 @@ export const Computer = ({
             <Cherry />
           </div>
         ) : hasBeenClicked ? (
-          <div className="flex items-center justify-center w-full h-full bg-red-600">
+          <div className="flex items-center justify-center w-full h-full bg-orange-500">
             {infected ? <Check className="text-green-500" /> : <Dead />}
           </div>
         ) : (
@@ -45,7 +47,7 @@ export const Computer = ({
             className={cn(
               "w-full h-full bg-red-600 flex items-center justify-center text-white",
               {
-                "bg-green-600": infected,
+                "animate-pulse bg-green-500": browsing,
               }
             )}
           >
