@@ -1,1 +1,1 @@
-export const NUMBER_OF_COMPUTERS = 240;
+export const NUMBER_OF_COMPUTERS = 96;

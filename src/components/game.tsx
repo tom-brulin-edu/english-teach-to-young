@@ -15,6 +15,8 @@ export const Game = () => {
   const router = useRouter();
   const [clickedComputers, setClickedComputers] = useState<number[]>([]);
   const [currentBrowsingIndex, setCurrentBrowsingIndex] = useState<number>(-1);
+  const [biggerComputers, setBiggerComputers] = useState<number[]>([]);
+  const [lowerComputers, setLowerComputers] = useState<number[]>([]);
   const [infectedIndex, setInfectedIndex] = useState(
     randomInt(0, NUMBER_OF_COMPUTERS - 1)
   );
@@ -42,8 +44,10 @@ export const Game = () => {
 
     if (infectedIndex < index) {
       toast("It's lower");
+      setLowerComputers((prev) => [...prev, index]);
     } else if (infectedIndex > index) {
       toast("It's bigger");
+      setBiggerComputers((prev) => [...prev, index]);
     } else {
       toast("You won", {
         type: "success",
@@ -93,6 +97,7 @@ export const Game = () => {
     let current = (NUMBER_OF_COMPUTERS - 1) / 2;
     let min = 0;
     let max = NUMBER_OF_COMPUTERS - 1;
+    setClickedComputers((prev) => [...prev, current]);
 
     const interval = setInterval(() => {
       if (current === NUMBER_OF_COMPUTERS - 1) {
@@ -115,9 +120,11 @@ export const Game = () => {
       }
 
       if (infectedIndex < current) {
+        setLowerComputers((prev) => [...prev, current]);
         max = current;
         current = Math.round(Math.floor((current - min) / 2));
       } else {
+        setBiggerComputers((prev) => [...prev, current]);
         min = current;
         current = Math.round(Math.floor((max - current) / 2) + current);
       }
@@ -178,6 +185,8 @@ export const Game = () => {
             destroyed={false}
             hasBeenClicked={clickedComputers.includes(i)}
             browsing={currentBrowsingIndex === i}
+            bigger={biggerComputers.includes(i)}
+            lower={lowerComputers.includes(i)}
             onClick={() => handleComputerClick(i)}
           />
         ))}

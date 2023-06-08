@@ -2,13 +2,15 @@
 
 import { Dead } from "@/components/icons/dead";
 import { cn } from "@/core/utils/cn";
-import { Check, Cherry } from "lucide-react";
+import { Check, Cherry, ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
   id: number;
   infected: boolean;
   destroyed: boolean;
   hasBeenClicked: boolean;
+  bigger: boolean;
+  lower: boolean;
   browsing: boolean;
   onClick: () => void;
 };
@@ -19,6 +21,8 @@ export const Computer = ({
   destroyed,
   hasBeenClicked,
   browsing,
+  lower,
+  bigger,
   onClick,
 }: Props) => {
   return (
@@ -40,7 +44,15 @@ export const Computer = ({
           </div>
         ) : hasBeenClicked ? (
           <div className="flex items-center justify-center w-full h-full bg-orange-500">
-            {infected ? <Check className="text-green-500" /> : <Dead />}
+            {infected ? (
+              <Check className="text-green-500" />
+            ) : lower ? (
+              <ChevronLeft className="text-white" />
+            ) : bigger ? (
+              <ChevronRight className="text-white" />
+            ) : (
+              <Dead />
+            )}
           </div>
         ) : (
           <div
