@@ -3,6 +3,7 @@
 import { Computer } from "@/components/computer";
 import { NUMBER_OF_COMPUTERS } from "@/config";
 import { Pause, Play, TimerReset } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useCountdown, useUpdateEffect } from "usehooks-ts";
@@ -11,6 +12,7 @@ const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const Game = () => {
+  const router = useRouter();
   const [clickedComputers, setClickedComputers] = useState<number[]>([]);
   const [infectedIndex, setInfectedIndex] = useState(
     randomInt(0, NUMBER_OF_COMPUTERS - 1)
@@ -61,6 +63,7 @@ export const Game = () => {
       stopCountdown();
       setTimerRunning(false);
       toast("Game over!");
+      router.push("/gameover");
     }
   }, [count]);
 
