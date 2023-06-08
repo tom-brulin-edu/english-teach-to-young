@@ -57,7 +57,7 @@ export const Computer = ({
             className={cn(
               "w-full h-full bg-red-600 flex items-center justify-center text-white",
               {
-                "animate-pulse bg-green-500": infected,
+                // "animate-pulse bg-green-500": infected,
               }
             )}
           >
