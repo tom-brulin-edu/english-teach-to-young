@@ -4,7 +4,7 @@ import { Computer } from "@/components/computer";
 import { NUMBER_OF_COMPUTERS } from "@/config";
 import { Pause, Play, TimerReset } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useCountdown, useUpdateEffect } from "usehooks-ts";
 
@@ -16,9 +16,11 @@ export const Game = () => {
   const [clickedComputers, setClickedComputers] = useState<number[]>([]);
   const [biggerComputers, setBiggerComputers] = useState<number[]>([]);
   const [lowerComputers, setLowerComputers] = useState<number[]>([]);
-  const [infectedIndex, setInfectedIndex] = useState(
-    randomInt(0, NUMBER_OF_COMPUTERS - 1)
-  );
+  const [infectedIndex, setInfectedIndex] = useState(0);
+
+  useEffect(() => {
+    setInfectedIndex(randomInt(0, NUMBER_OF_COMPUTERS - 1));
+  }, []);
 
   const [timerRunning, setTimerRunning] = useState(false);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
@@ -97,13 +99,14 @@ export const Game = () => {
     let max = infectedIndex < current ? current : NUMBER_OF_COMPUTERS - 1;
     setClickedComputers((prev) => [...prev, current]);
 
+    if (infectedIndex > current) {
+      setBiggerComputers((prev) => [...prev, current]);
+    } else if (infectedIndex < current) {
+      setLowerComputers((prev) => [...prev, current]);
+    }
+
     const interval = setInterval(() => {
       console.log("min", min, "max", max, "current", current);
-
-      if (current === NUMBER_OF_COMPUTERS - 1) {
-        clearInterval(interval);
-        return;
-      }
 
       setClickedComputers((prev) => [...prev, current]);
 
